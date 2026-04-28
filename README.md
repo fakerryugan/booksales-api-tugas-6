@@ -1,59 +1,110 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Tugas 6 - Middleware & API Routing
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+**Nama:** Fatkur Rohman Irham  
+**Kampus:** Politeknik Negeri Banyuwangi  
 
-## About Laravel
+Proyek ini merupakan kelanjutan dari sistem API Book Sales. Fokus pada tugas ini adalah menerapkan **Middleware** untuk membatasi hak akses pada operasi-operasi tertentu agar lebih aman dan sesuai aturan bisnis.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Instruksi Tugas
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+1. **Atur Routing dengan Middleware:**
+   - Endpoint **Read All (Index)** dan **Show (Detail)** untuk tabel `Author` dan `Genre` bersifat **publik** (dapat diakses oleh siapa saja tanpa autentikasi).
+   - Endpoint **Create, Update, dan Destroy** hanya boleh diakses oleh pengguna yang memiliki role **Admin**.
+2. **Testing:**
+   - Gunakan Postman untuk menguji skenario Public Access vs Admin-only Access.
+3. **Pengumpulan:**
+   - Push repository ke GitHub.
+   - Mengumpulkan Link Repository.
+   - Mengumpulkan file `routes/api.php`.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+# Hasil Pengerjaan Tugas
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+## Dokumentasi Pengujian Endpoint (POSTMAN)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Bagian 1: Endpoint Public (Tanpa Autentikasi)
+*Pengujian ini dilakukan tanpa mengirimkan Bearer Token (belum login)*
 
-## Laravel Sponsors
+#### A. Tabel Genre
+**1. Read All Genre (GET)**
+<img width="710" height="384" alt="image" src="https://github.com/user-attachments/assets/02aa4e92-5979-4e8d-985c-a9d916386fb5" />
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**2. Show Detail Genre (GET)**
+<img width="716" height="378" alt="image" src="https://github.com/user-attachments/assets/11ba76c0-7d30-4386-b4f1-975b6bc02fa1" />
 
-### Premium Partners
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+#### B. Tabel Author
+**1. Read All Author (GET)**
+<img width="719" height="404" alt="image" src="https://github.com/user-attachments/assets/5528efdf-3814-499d-87b4-32aaf4d6947d" />
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**2. Show Detail Author (GET)**
+<img width="718" height="395" alt="image" src="https://github.com/user-attachments/assets/7c4f16e8-ddd9-4307-8ccc-b96d08b7f074" />
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+### Bagian 2: Akses Tertolak (Akses Admin tanpa Token / Unauthorized)
+*Pengujian ini menunjukkan ketika user (atau orang asing) mencoba mengakses rute terproteksi tanpa token admin*
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**1. Gagal Create Genre (POST)**
+<img width="722" height="437" alt="image" src="https://github.com/user-attachments/assets/99811385-f197-4a12-9244-b8fe4f5062c0" />
 
-## License
+**2. Gagal Update genre (PUT / PATCH)**
+<img width="711" height="442" alt="image" src="https://github.com/user-attachments/assets/f276079c-f5b5-46b5-998e-dde496198659" />
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+**3. Gagal Destroy Genre (DELETE)**
+<img width="700" height="428" alt="image" src="https://github.com/user-attachments/assets/087a2b69-7e19-46f4-910c-1f093e4350e8" />
+
+---
+
+### Bagian 3: Akses Admin Berhasil (Menggunakan Token Admin)
+*Pengujian ini dilakukan setelah Admin Login dan memasukkan Bearer Token pada Header Postman*
+
+#### A. Operasi oleh Admin pada Tabel Genre
+**1. Create Genre oleh Admin (POST)**
+<img width="718" height="391" alt="image" src="https://github.com/user-attachments/assets/b5f19afa-9d13-48d5-a607-e62981cb01cd" />
+
+
+**2. Update Genre oleh Admin (PUT / PATCH)**
+<img width="714" height="407" alt="image" src="https://github.com/user-attachments/assets/444ae7b6-60a5-4663-a4c5-b0c6e1ca3072" />
+
+
+**3. Destroy Genre oleh Admin (DELETE)**
+
+<img width="719" height="332" alt="image" src="https://github.com/user-attachments/assets/208b13e2-c4a2-4868-a9f0-e958eebb6955" />
+
+#### B. Operasi oleh Admin pada Tabel Author
+**1. Create Author oleh Admin (POST)**
+<img width="715" height="404" alt="image" src="https://github.com/user-attachments/assets/1a653423-6e1a-4e4a-9df9-46a660db7d79" />
+
+
+**2. Update Author oleh Admin (PUT / PATCH)**
+<img width="725" height="415" alt="image" src="https://github.com/user-attachments/assets/8a0e1651-18a2-4381-993a-e6777ab38686" />
+
+
+**3. Destroy Author oleh Admin (DELETE)**
+<img width="716" height="362" alt="image" src="https://github.com/user-attachments/assets/714119b0-c2a1-4060-81dc-3d09f728b5ea" />
+
+
+---
+
+### Bagian 4: Cuplikan Kode Implementasi Middleware (`routes/api.php`)
+
+
+```php
+route::post('register',[AuthController::class,'register']);
+Route::post('login',[AuthController::class,'login']);
+Route::post('logout',[AuthController::class,'logout'])->middleware('auth:api');
+route::middleware('auth:api')->group(function () {
+
+route::middleware('role:admin')->group(function () {
+    Route::apiResource('/books', BookController::class)->only('store','update','destroy');
+    Route::apiResource('/author', AuthorController::class)->only('store','update','destroy');
+    Route::apiResource('/genre', GenreController::class)->only('store','update','destroy');
+});});
+Route::apiResource('/books', BookController::class)->only('index','show');
+Route::apiResource('/author', AuthorController::class)->only('index','show');
+Route::apiResource('/genre',GenreController::class)->only('index','show');
+```
